@@ -3,7 +3,13 @@
 <meta charset="utf-8">
 <title> Belajar JavaScript </title>
 	<style>
-		
+	.error {
+		background-color: pink;
+		border: 1px solid red;
+		width: 300px;
+		text-align: center;
+		padding: 5px;
+	}
 	</style>
 </head>
 	<body>
@@ -19,6 +25,7 @@
 			function diProses(e){
 				if (usernameNode.value===""){
 					pesanNode.innerHTML = "Username harus diisi";
+					pesanNode.className = "error";
 					e.preventDefault();
 				}
 			}
