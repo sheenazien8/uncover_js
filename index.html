@@ -4,39 +4,45 @@
 <title> Belajar JavaScript </title>
 	<style>
 	.error {
-		background-color: pink;
-		border: 1px solid red;
+		color: red;
 		width: 300px;
 		text-align: center;
-		padding: 5px;
+		padding: 2px 10px;
+		margin-left: 10px;
 	}
 	</style>
 </head>
 	<body>
-		<p id="pesan"></p>
 		<form id="formKu" name="formKu" method="get" action="proses.php">
-			<p>Username: <input type="text" name="username" id="username"></p>
+			<p>Username: <input type="text" name="username" id="username">
+			<span id="usernameSpan"></span></p>
 			<p><input type="submit" name="submit" id="submit" value="Kirim Data"></p>
 		</form>
 		<script>
 			var formKuNode = document.getElementById("formKu");
 			var usernameNode = document.getElementById("username");
-			var pesanNode = document.getElementById("pesan");
+			var usernameSpanNode = document.getElementById("usernameSpan");
 			function diProses(e){
+					var usernameError = ""
 				if (usernameNode.value.trim() === ""){
-					pesanNode.innerHTML = "Username harus diisi";
-					pesanNode.className = "error";
-					e.preventDefault();
+					usernameError = "Username tidak boleh kosong"
 				}else if (/\W/.test(usernameNode.value.trim())) {
-					pesanNode.innerHTML = "Hanya bisa diisi karakter alfanumerik";
-					pesanNode.className = "error";
-					e.preventDefault();	
+					usernameError = "Username harus berisi alfanumerik"
 				}else if (usernameNode.value.trim().length < 6) {
-					pesanNode.innerHTML = "Panjang Karakter tidak boleh kurang dari 6";
-					pesanNode.className = "error";
-					e.preventDefault();	
+					usernameError = "Username tidak boleh kurang dari 6 karakter"
+				}
+
+				if (usernameError !== "") {
+					usernameSpanNode.innerHTML = usernameError
+					usernameSpanNode.className = "error"
+					usernameNode.style.border = "2px solid red";
+					e.preventDefault()
 				}
 			}
+			usernameNode.addEventListener('focus', function (e) {
+				e.target.style.border = "";
+				e.target.parentElement.lastChild.innerHTML = "";
+			})
 			formKuNode.addEventListener("submit",diProses);
 		</script>
 	</body>
