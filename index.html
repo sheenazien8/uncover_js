@@ -7,10 +7,22 @@
 	</style>
 </head>
 	<body>
+		<p id="pesan"></p>
 		<form id="formKu" name="formKu" method="get" action="proses.php">
-		<p>Username: <input type="text" name="username" id="username"
-		required pattern="[A-Z]{3}[0-9]{3}"></p>
-		<p><input type="submit" name="submit" id="submit" value="Kirim Data"></p>
+			<p>Username: <input type="text" name="username" id="username"></p>
+			<p><input type="submit" name="submit" id="submit" value="Kirim Data"></p>
 		</form>
+		<script>
+			var formKuNode = document.getElementById("formKu");
+			var usernameNode = document.getElementById("username");
+			var pesanNode = document.getElementById("pesan");
+			function diProses(e){
+				if (usernameNode.value===""){
+					pesanNode.innerHTML = "Username harus diisi";
+					e.preventDefault();
+				}
+			}
+			formKuNode.addEventListener("submit",diProses);
+		</script>
 	</body>
 </html>
