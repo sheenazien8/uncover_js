@@ -23,7 +23,7 @@
 			var usernameNode = document.getElementById("username");
 			var pesanNode = document.getElementById("pesan");
 			function diProses(e){
-				if (usernameNode.value===""){
+				if (usernameNode.value.trim() ===""){
 					pesanNode.innerHTML = "Username harus diisi";
 					pesanNode.className = "error";
 					e.preventDefault();
