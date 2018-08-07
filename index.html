@@ -23,10 +23,18 @@
 			var usernameNode = document.getElementById("username");
 			var pesanNode = document.getElementById("pesan");
 			function diProses(e){
-				if (usernameNode.value.trim() ===""){
+				if (usernameNode.value.trim() === ""){
 					pesanNode.innerHTML = "Username harus diisi";
 					pesanNode.className = "error";
 					e.preventDefault();
+				}else if (/\W/.test(usernameNode.value.trim())) {
+					pesanNode.innerHTML = "Hanya bisa diisi karakter alfanumerik";
+					pesanNode.className = "error";
+					e.preventDefault();	
+				}else if (usernameNode.value.trim().length < 6) {
+					pesanNode.innerHTML = "Panjang Karakter tidak boleh kurang dari 6";
+					pesanNode.className = "error";
+					e.preventDefault();	
 				}
 			}
 			formKuNode.addEventListener("submit",diProses);
