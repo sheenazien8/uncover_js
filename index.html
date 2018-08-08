@@ -16,14 +16,38 @@
 		<form id="formKu" name="formKu" method="get" action="proses.php">
 			<p>Username: <input type="text" name="username" id="username">
 			<span id="usernameSpan"></span></p>
+
+			<p>Password: <input type="password" name="password" id="password">
+			<span id="passwordSpan"></span></p>
+
+			<p>Konfirmasi Password: <input type="password" name="re-password" id="re-password">
+			<span id="re-passwordSpan"></span></p>
+
+			<p><input type="checkbox" name="ketentuan" id="ketentuan">
+			Saya menyetujui syarat dan ketentuan
+			<span id="checkboxSpan"></span></p>
+
 			<p><input type="submit" name="submit" id="submit" value="Kirim Data"></p>
 		</form>
 		<script>
 			var formKuNode = document.getElementById("formKu");
+
 			var usernameNode = document.getElementById("username");
 			var usernameSpanNode = document.getElementById("usernameSpan");
+
+			var passwordNode = document.getElementById('password')
+			var passwordSpanNode = document.getElementById('passwordSpan')
+			
+			var repasswordNode = document.getElementById('re-password')
+			var repasswordSpanNode = document.getElementById('re-passwordSpan')
+
+			var ketentuanNode = document.getElementById('ketentuan')
+			var ketentuanSpanNode = document.getElementById('checkboxSpan')
+
 			function diProses(e){
-					var usernameError = ""
+				/*Validasi username*/
+				var usernameError = ""
+				
 				if (usernameNode.value.trim() === ""){
 					usernameError = "Username tidak boleh kosong"
 				}else if (/\W/.test(usernameNode.value.trim())) {
@@ -37,13 +61,81 @@
 					usernameSpanNode.className = "error"
 					usernameNode.style.border = "2px solid red";
 					e.preventDefault()
+				}else {
+					e.target.parentElement.lastChild.innerHTML = "";
+					usernameNode.style.border = "2px solid green";
 				}
+
+				/*Validasi Password*/
+				var passError = ""
+
+				if (passwordNode.value.trim() === "") {
+					passError = "Password tidak boleh kosong"
+				}else if (/\W/.test(passwordNode.value.trim())) {
+					passError = "Password harus berisi alfanumerik"
+				}else if (passwordNode.value.trim() < 6) {
+					passError = "Password tidak boleh kurang dari 6 karakter"	
+				}
+
+				if (passError !== "") {
+					passwordSpanNode.innerHTML = passError
+					passwordSpanNode.className = "error"
+					passwordNode.style.border = "2px solid red"
+					e.preventDefault()
+				}else {
+					e.target.parentElement.lastChild.innerHTML = "";
+					passwordNode.style.border = "2px solid green"
+				}
+
+				/*Validasi konfirmasi password*/
+				var kpasError = ""
+
+				if (repasswordNode.value.trim() == "") {
+					kpasError = "Konfirmasi Password tidak boleh kosong"
+				}else if (repasswordNode.value.trim() !== passwordNode.value.trim()) {
+					kpasError = "Konfirmasi Password tidak sama"
+				}
+
+				if (kpasError !== "") {
+					repasswordSpanNode.innerHTML = kpasError
+					repasswordSpanNode.className = "error"
+					repasswordNode.style.border = "2px solid red"
+					e.preventDefault()
+				}else {
+					e.target.parentElement.lastChild.innerHTML = "";
+					repasswordNode.style.border = "2px solid green"
+				}
+
+				/*Validasi syarat dan ketentuan*/
+				var ketError = ""
+
+				if (ketentuanNode.checked !== true) {
+					ketError = "Syarat dan Ketentuan harus disetujui"
+				}
+
+				if (ketError !== "") {
+					ketentuanSpanNode.innerHTML = ketError
+					ketentuanSpanNode.className = "error"
+					e.preventDefault()
+                    
+				}
+
 			}
+
 			usernameNode.addEventListener('focus', function (e) {
 				e.target.style.border = "";
 				e.target.parentElement.lastChild.innerHTML = "";
 			})
-			formKuNode.addEventListener("submit",diProses);
+			passwordNode.addEventListener('focus', function (e) {
+				e.target.style.border = "";
+				e.target.parentElement.lastChild.innerHTML = "";
+			})
+			repasswordNode.addEventListener('focus', function (e) {
+				e.target.style.border = "";
+				e.target.parentElement.lastChild.innerHTML = "";
+			})
+
+			formKuNode.addEventListener("submit",diProses)
 		</script>
 	</body>
 </html>
